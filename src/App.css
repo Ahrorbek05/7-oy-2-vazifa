@@ -1,23 +1,60 @@
-body{
-    background-color: #10B082;
+body {
+  background-color: #10B082;
 }
 
-h1{
-    color: white;
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 50px;
+.wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .page-content {
-    min-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.pagination {
+  margin-top: auto;
+  padding: 20px 0;
+}
+
+/* Cards styling for 4 per row */
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* To add space between cards */
+}
+
+.card {
+  background-color: white;
+  padding: 20px;
+  margin: 10px;
+  flex: 1 1 calc(25% - 20px); /* 4 ta kartani bir qatorga sig'dirish uchun */
+  box-sizing: border-box;
+}
+
+.card img {
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 1 1 calc(50% - 20px); /* Kichik ekranlar uchun 2 ta kartani bir qatorga joylashtirish */
   }
-  
-  .pagination {
-    margin-top: auto;
-    padding: 20px 0;
+}
+
+@media (max-width: 480px) {
+  .card {
+    flex: 1 1 calc(100% - 20px); /* Juda kichik ekranlar uchun 1 ta karta */
   }
-  
+}

@@ -1,38 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Loading from './components/Loader/Loading';
 import Test from './components/Test/Test';
 import ReactPaginate from 'react-paginate';
+import data from './assets/data/data.json';
 
 function App() {
   const [machines, setMachines] = useState([]);
-  const [apiPage, setApiPage] = useState(0);
-  const itemsPage = 20;
-  const pageCount = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 20;
 
   useEffect(() => {
-    fetch(`http://localhost:3000/machines?page=${apiPage + 1}&limit=${itemsPage}`)
-      .then(response => response.json())
-      .then(data => Array.isArray(data) ? setMachines(data) : console.error('Xatolik!', data))
-      .catch(error => console.log('Qandaydir xatolik:', error));
-  }, [apiPage]);
+    fetchData();
+  }, [currentPage]);
+
+  function fetchData() {
+    const startIndex = currentPage * itemsPerPage;
+    const selectedMachines = data.slice(startIndex, startIndex + itemsPerPage);
+    setMachines(selectedMachines);
+  };
 
   function handlePageClick(data) {
-    setApiPage(data.selected);
-  }
+    setCurrentPage(data.selected);
+  };
 
   return (
     <div>
-      <h1>Cars information</h1>
+      <h1>Cars Information</h1>
       <Test machines={machines} />
-      <Loading />
       <div className="page-content">
       </div>
       <ReactPaginate
         previousLabel={"previous"}
         nextLabel={"next"}
         breakLabel={"..."}
-        pageCount={pageCount}
+        pageCount={Math.ceil(data.length / itemsPerPage)}
         marginPagesDisplayed={3}
         pageRangeDisplayed={3}
         onPageChange={handlePageClick}

@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './test.module.css';
+import data from '../../assets/data/data.json';
 
-function Test({ machines }) {
+function Test() {
+  const [machines, setMachines] = useState([]);
+
+  useEffect(() => {
+    setMachines(data);
+  }, []);
+
   return (
     <div className={styles.main}>
       <div className={styles.container}>
@@ -9,8 +16,8 @@ function Test({ machines }) {
           <div key={index} className={styles.card}>
             <img src={machine.image} alt={machine.title} />
             <h2>{machine.title}</h2>
-            <h3>{machine.year}</h3>
-            <p>{machine.startProduction}</p>
+            <h3>{machine.start_production}</h3>
+            <p>{machine.class}</p>
           </div>
         ))}
       </div>
