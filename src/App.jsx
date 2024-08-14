@@ -10,7 +10,7 @@ function App() {
   const [apiPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [pageCount, setPageCount] = useState(0);
-  const itemsPerPage = 20;
+  const itemsPage = 20;
 
   useEffect(() => {
     fetchData();
@@ -19,7 +19,7 @@ function App() {
   async function fetchData() {
     setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/machines?page=${apiPage + 1}&limit=${itemsPerPage}`);
+      const response = await fetch(`http://localhost:3000/machines?page=${apiPage + 1}&limit=${itemsPage}`);
       const data = await response.json();
       setMachines(data.items);
       setPageCount(data.totalPages);
