@@ -1,16 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './test.module.css';
 
-function Test() {
-  const [machines, setMachines] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/machines?page=5&limit=20')
-      .then(response => response.json())
-      .then(data => Array.isArray(data) ? setMachines(data) : console.log('Malumot!:', data))
-      .catch(error => console.log('Qandaydir xatolik:', error));
-  }, []);
-
+function Test({ machines }) {
   return (
     <div className={styles.main}>
       <div className={styles.container}>

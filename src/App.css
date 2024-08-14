@@ -8,3 +8,16 @@ h1{
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
+.page-content {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .pagination {
+    margin-top: auto;
+    padding: 20px 0;
+  }
+  
