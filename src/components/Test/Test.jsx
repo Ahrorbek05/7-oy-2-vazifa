@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import styles from './test.module.css';
-import data from '../../assets/data/data.json';
 
 function Test() {
   const [machines, setMachines] = useState([]);
 
   useEffect(() => {
-    setMachines(data);
+    const fetchData = async () => {
+      
+      try {
+        const response = await fetch('http://localhost:3000/machines?page=5&limit=20');
+        const data = await response.json();
+        setMachines(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
