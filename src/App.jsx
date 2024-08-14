@@ -3,23 +3,30 @@ import './App.css';
 import Loading from './components/Loader/Loading';
 import Test from './components/Test/Test';
 import ReactPaginate from 'react-paginate';
+import Card from './components/Card1/card';
 
 function App() {
   const [machines, setMachines] = useState([]);
   const [apiPage, setCurrentPage] = useState(0);
-  const itemsPage = 20;
+  const [isLoading, setIsLoading] = useState(false);
+  const [pageCount, setPageCount] = useState(0);
+  const itemsPerPage = 20;
 
   useEffect(() => {
     fetchData();
   }, [apiPage]);
 
   async function fetchData() {
+    setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:3000/machines?page=${apiPage + 1}&limit=${itemsPage}`);
+      const response = await fetch(`http://localhost:3000/machines?page=${apiPage + 1}&limit=${itemsPerPage}`);
       const data = await response.json();
-      setMachines(data);
+      setMachines(data.items);
+      setPageCount(data.totalPages);
     } catch (error) {
       console.error('Error fetching data:', error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -30,13 +37,20 @@ function App() {
   return (
     <div>
       <h1>Cars Information</h1>
-      <Test machines={machines} />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <Test machines={machines} />
+          <Card machines={machines}/>
+        </>
+      )}
       <div className="page-content">
         <ReactPaginate
           previousLabel={"previous"}
           nextLabel={"next"}
           breakLabel={"..."}
-          pageCount={Math.ceil(machines.length / itemsPage)}
+          pageCount={pageCount}
           marginPagesDisplayed={3}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
